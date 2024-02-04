@@ -12,24 +12,39 @@
 
 **DFreds Module Template TS** is a FoundryVTT module template that uses Typescript and Vite for development.
 
-## After Using as Template
+## Setup
 
 - Ensure you have the pf2e repo cloned from github (`git clone git@github.com:foundryvtt/pf2e.git`)
-- Rename the folder to what your module identifier will be (i.e. `dfreds-module-template-ts`)
+- Use the template button on Github to create a new repo. Make sure that the "Repository name" is the same name as the identifier of your new module. This is important since the folder name NEEDS to match the identifier when the module is linked to Foundry
+  - Example:
+    - Owner: DFreds
+    - Repository name: `dfreds-new-cool-module`
+- Clone the repo OUTSIDE of the Foundry data path
 - Copy `foundryconfig.example.json` to `foundryconfig.json` and update the data and pf2e paths
-- `nvm use` or `nvm install <version>` and `nvm use`
-- `npm ci`
-- `npm run rename-module`
-- `npm run update-types`
-- `npm run build`
-- `npm run link`
-- If you don't plan on using any 3rd party dependencies, then be sure to remove `vendor.mjs` everywhere that it is mentioned.
+  - This will allow the setup scripts to run
+  - Example:
+    - Windows: `"dataPath": "C:\\Users\\DFreds\\AppData\\Local\\FoundryVTT\\Data"`
+- If not already installed, download and install [nvm](https://github.com/nvm-sh/nvm).
+- Run `nvm use` or `nvm install <version>` and `nvm use`
+  - Ensures a common node version is used regardless of user environment
+- Run `npm ci`
+  - Installs all dependencies according to the `package-lock.json`
+- Run `npm run rename-module`
+  - Replaces all occurrences of `dfreds-module-template-ts` and `DFreds Module Template TS` in the project with your desired module identifier and name
+- Run `npm run update-types`
+  - Copies all pf2e types to the `/types` folder using the pf2e path set in `foundryconfig.json`
+- Run `npm run build`
+  - Builds the app into the `/dist` folder
+- Run `npm run link`
+  - Symlinks the built `/dist` folder to your Foundry data path set in `foundryconfig.json`
+- If you don't plan on using any 3rd party dependencies, then be sure to remove `vendor.mjs` everywhere that it is mentioned in the project.
+  - Note that the UUID dependency was included to get started. It's likely you don't need this specific dependency, but the module won't build without at least one dependency if the references to `vendor.mjs` exists in the project.
 
 ## Updating Node
 
 After updating to a new node version, run `node -v > .nvmrc`.
 
-## Releasing a New Version
+## Releasing a New Module Version
 
 - Create a new tag with the format `major.minor.patch` or `vMajor.Minor.Patch`.
   - Example: `1.0.0` or `v1.0.0`
