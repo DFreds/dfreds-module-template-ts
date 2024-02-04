@@ -29,6 +29,14 @@
 
 After updating to a new node version, run `node -v > .nvmrc`.
 
+## Releasing a New Version
+
+- Create a new tag with the format `major.minor.patch` or `vMajor.Minor.Patch`.
+  - Example: `1.0.0` or `v1.0.0`
+- Push the tag to origin
+- Once the workflow completes, go to the Releases and observe the new draft release corresponding to the version
+- Edit the draft release, make any desired changes, and then press Publish
+
 ## References
 
 - https://foundryvtt.com/article/module-development/
