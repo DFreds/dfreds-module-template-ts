@@ -37,6 +37,7 @@
   - Builds the app into the `/dist` folder
 - Run `npm run link`
   - Symlinks the built `/dist` folder to your Foundry data path set in `foundryconfig.json`
+- Run `npm run lint:fix` to fix any lint issues automatically
 - If you don't plan on using any 3rd party dependencies, then be sure to remove `vendor.mjs` everywhere that it is mentioned in the project.
   - Note that the UUID dependency was included to get started. It's likely you don't need this specific dependency, but the module won't build without at least one dependency if the references to `vendor.mjs` exists in the project.
 
