@@ -4,6 +4,7 @@ import process from "process";
 import prompts from "prompts";
 // @ts-expect-error Expect error when the `foundryconfig.example.json` was not copied
 import { dataPath } from "../foundryconfig.json";
+import { id as MODULE_ID } from "../static/module.json";
 
 if (!dataPath || !/\bData$/.test(dataPath)) {
     console.error(`"${dataPath}" does not look like a Foundry data folder.`);
@@ -17,8 +18,7 @@ if (!dataPathStats?.isDirectory()) {
     process.exit(1);
 }
 
-const PACKAGE_ID = "dfreds-module-template-ts";
-const symlinkPath = path.resolve(dataPath, "modules", PACKAGE_ID);
+const symlinkPath = path.resolve(dataPath, "modules", MODULE_ID);
 const symlinkStats = fs.lstatSync(symlinkPath, { throwIfNoEntry: false });
 
 if (symlinkStats) {
@@ -32,7 +32,7 @@ if (symlinkStats) {
             type: "confirm",
             name: "value",
             initial: false,
-            message: `A "${PACKAGE_ID}" ${atPath} already exists in the "modules" subfolder. Replace with new symlink?`,
+            message: `A "${MODULE_ID}" ${atPath} already exists in the "modules" subfolder. Replace with new symlink?`,
         })
     ).value;
 

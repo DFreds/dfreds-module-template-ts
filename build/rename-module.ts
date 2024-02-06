@@ -43,6 +43,7 @@ const dirsToInclude = [
     path.resolve(dirToSearch, "README.md"),
     path.resolve(dirToSearch, "vite.config.ts"),
 ];
+const filesToInclude = [path.resolve(dirToSearch, ".gitignore")];
 
 const files = fs
     .readdirSync(dirToSearch, {
@@ -60,6 +61,8 @@ const files = fs
 
         return isIncluded && !isDirectory;
     });
+
+files.push(...filesToInclude);
 
 console.log(
     `Changing identifier and name in the following files:\n${files.join("\n")}`,
