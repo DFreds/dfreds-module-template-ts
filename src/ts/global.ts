@@ -1,5 +1,28 @@
 declare global {
     namespace globalThis {
+        let CONFIG: Config<
+            AmbientLightDocument<Scene | null>,
+            ActiveEffect<null>,
+            Actor<null>,
+            ActorDelta<null>,
+            ChatLog,
+            ChatMessage,
+            Combat,
+            Combatant<null, null>,
+            CombatTracker<null>,
+            CompendiumDirectory,
+            Hotbar,
+            Item<null>,
+            Macro,
+            MeasuredTemplateDocument<null>,
+            TileDocument<null>,
+            TokenDocument<Scene | null>,
+            WallDocument<null>,
+            Scene,
+            User<Actor<null>>,
+            EffectsCanvasGroup
+        >;
+        let canvas: Canvas;
         let game: Game<
             Actor<null>,
             Actors<Actor<null>>,
@@ -18,9 +41,7 @@ declare global {
             CombatTracker<Combat | null>,
             Hotbar
         >;
-
-        let libWrapper: LibWrapper;
-
-        type AnyFunction = (...args: any) => any;
     }
+
+    type AnyFunction = (...args: any) => any;
 }
