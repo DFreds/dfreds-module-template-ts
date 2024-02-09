@@ -44,8 +44,14 @@ const dirsToInclude = [
     path.resolve(dirToSearch, "vite.config.ts"),
 ];
 const filesToInclude = [path.resolve(dirToSearch, ".gitignore")];
+const lockFilePath = path.resolve(
+    dirToSearch,
+    "static",
+    "dfreds-module-template-ts.lock",
+);
 
-const files = fs
+// Recursively find all files in included dirs
+const filesToReplaceStrings = fs
     .readdirSync(dirToSearch, {
         encoding: "utf-8",
         recursive: true,
@@ -62,14 +68,15 @@ const files = fs
         return isIncluded && !isDirectory;
     });
 
-files.push(...filesToInclude);
+// Add specific files not searched
+filesToReplaceStrings.push(...filesToInclude);
 
 console.log(
-    `Changing identifier and name in the following files:\n${files.join("\n")}`,
+    `Changing identifier and name in the following files:\n${filesToReplaceStrings.join("\n")}`,
 );
 
 try {
-    for (const file of files) {
+    for (const file of filesToReplaceStrings) {
         const fileData = fs.readFileSync(file, { encoding: "utf8" });
         const replaced = fileData
             .replace(/dfreds-module-template-ts/g, newModuleIdentifier)
@@ -77,6 +84,12 @@ try {
 
         fs.writeFileSync(file, replaced);
     }
+
+    // Rename the lock file
+    fs.renameSync(
+        lockFilePath,
+        path.resolve(dirToSearch, "static", `${newModuleIdentifier}.lock`),
+    );
 } catch (error) {
     console.error(error);
     process.exit(1);
