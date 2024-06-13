@@ -33,11 +33,12 @@
   - Replaces all occurrences of `dfreds-module-template-ts` and `DFreds Module Template TS` in the project with your desired module identifier and name
 - Run `npm run update-types`
   - Copies all pf2e types to the `/types` folder using the pf2e path set in `foundryconfig.json`
+- Run `npm run lint:fix`
+  - Fixes and formats all the types you just copied from pf2e. Recommend doing this after every type update to reduce diffs
 - Run `npm run build`
   - Builds the app into the `/dist` folder
 - Run `npm run link`
   - Symlinks the built `/dist` folder to your Foundry data path set in `foundryconfig.json`
-- Run `npm run lint:fix` to fix any lint issues automatically
 - If you don't plan on using any 3rd party dependencies, then be sure to remove `vendor.mjs` everywhere that it is mentioned in the project.
   - Note that the UUID dependency was included to get started. It's likely you don't need this specific dependency, but the module won't build without at least one dependency if the references to `vendor.mjs` exists in the project.
 
