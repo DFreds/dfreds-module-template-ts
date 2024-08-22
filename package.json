@@ -9,6 +9,7 @@
         "dev": "tsc && npm run clean && vite build --mode development",
         "clean": "tsx ./build/clean.ts",
         "hot": "vite serve",
+        "rename-module": "tsx ./build/rename-module.ts",
         "watch": "tsc && npm run clean && vite build --watch --mode development",
         "link": "tsx ./build/link-foundry.ts",
         "update-types": "tsx ./build/update-pf2e-types.ts && tsx ./build/copy-pf2e-types.ts",
