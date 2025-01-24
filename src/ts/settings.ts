@@ -4,7 +4,7 @@ class Settings {
     // Settings keys
     #DUMMY = "dummy";
 
-    registerSettings(): void {
+    register(): void {
         game.settings.register(MODULE_ID, this.#DUMMY, {
             name: "Some dummy setting",
             hint: "Some dummy hint",

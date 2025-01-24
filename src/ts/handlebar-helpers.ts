@@ -1,7 +1,7 @@
 class HandlebarHelpers {
     constructor() {}
 
-    registerHelpers(): void {
+    register(): void {
         this.#registerDummyHandlebar();
     }
 
