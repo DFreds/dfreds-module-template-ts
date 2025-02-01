@@ -10,7 +10,12 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 const PACKAGE_ID = "modules/dfreds-module-template-ts";
 
 const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
-    const buildMode = mode === "production" ? "production" : "development";
+    const buildMode =
+        mode === "production"
+            ? "production"
+            : mode === "stage"
+              ? "stage"
+              : "development";
     const outDir = "dist";
     const plugins = [checker({ typescript: true }), tsconfigPaths()];
 
@@ -20,6 +25,13 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
         plugins.push(
             minifyPlugin(),
             deleteLockFilePlugin(),
+            ...viteStaticCopy({
+                targets: [{ src: "README.md", dest: "." }],
+            }),
+        );
+    } else if (buildMode === "stage") {
+        plugins.push(
+            minifyPlugin(),
             ...viteStaticCopy({
                 targets: [{ src: "README.md", dest: "." }],
             }),
