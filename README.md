@@ -61,6 +61,7 @@
 - Run `npm run link`
   - Symlinks the built `/dist` folder to your Foundry data path set in `foundryconfig.json`
 - If you want to use the publish to discord action, then be sure to add a repository secret called `DISCORD_WEBHOOK_URL` that points to your configured webhook. You should also update the content and release username if applicable.
+  - To point to role IDs, use "<@&{role_id}>" in the content.
 - If you don't plan on using any 3rd party dependencies, then be sure to remove `vendor.mjs` everywhere that it is mentioned in the project.
   - Note that the UUID dependency was included to get started. It's likely you don't need this specific dependency, but the module won't build without at least one dependency if the references to `vendor.mjs` exists in the project.
 

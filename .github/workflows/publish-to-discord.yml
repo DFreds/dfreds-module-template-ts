@@ -16,5 +16,5 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: "DFreds Module Template TS - Release"
-          content: "@all-updates @dfreds-module-template-ts"
+          content: "<@&1200173776898371635> <@&TODO_OTHER_ROLE_ID>"
           footer_timestamp: true
