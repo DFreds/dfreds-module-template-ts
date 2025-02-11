@@ -17,8 +17,13 @@
         "systems": [],
         "requires": []
     },
-    "languages": [],
-    "system": [],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
     "authors": [
         {
             "name": "DFreds",
