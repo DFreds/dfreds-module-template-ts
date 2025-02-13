@@ -2,14 +2,14 @@ class HandlebarHelpers {
     constructor() {}
 
     register(): void {
-        this.#registerDummyHandlebar();
+        // this.#registerDummyHandlebar();
     }
 
-    #registerDummyHandlebar() {
-        Handlebars.registerHelper("dummyHandlebar", () => {
-            return true;
-        });
-    }
+    // #registerDummyHandlebar() {
+    //     Handlebars.registerHelper("dummyHandlebar", () => {
+    //         return true;
+    //     });
+    // }
 }
 
 export { HandlebarHelpers };
