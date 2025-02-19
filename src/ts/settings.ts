@@ -2,12 +2,12 @@ import { MODULE_ID } from "./constants.ts";
 
 class Settings {
     // Settings keys
-    #DUMMY = "dummy";
+    #SAMPLE = "sample";
 
     register(): void {
-        game.settings.register(MODULE_ID, this.#DUMMY, {
-            name: "Some dummy setting",
-            hint: "Some dummy hint",
+        game.settings.register(MODULE_ID, this.#SAMPLE, {
+            name: EN_JSON.ModuleTemplate.Settings.SampleSetting.Name,
+            hint: EN_JSON.ModuleTemplate.Settings.SampleSetting.Hint,
             scope: "world",
             config: true,
             default: true,
@@ -15,8 +15,12 @@ class Settings {
         });
     }
 
-    get dummy(): Boolean {
-        return game.settings.get(MODULE_ID, this.#DUMMY) as Boolean;
+    get sample(): boolean {
+        return game.settings.get(MODULE_ID, this.#SAMPLE) as boolean;
+    }
+
+    async setSample(value: boolean): Promise<unknown> {
+        return game.settings.set(MODULE_ID, this.#SAMPLE, value);
     }
 }
 
