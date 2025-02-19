@@ -1,3 +1,5 @@
+import type EnJSON from "static/lang/en.json";
+
 declare global {
     namespace globalThis {
         let CONFIG: Config<
@@ -46,4 +48,7 @@ declare global {
     }
 
     type AnyFunction = (...args: any) => any;
+
+    const BUILD_MODE: "development" | "stage" | "production";
+    const EN_JSON: typeof EnJSON;
 }
