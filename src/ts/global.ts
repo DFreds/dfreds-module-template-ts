@@ -1,4 +1,4 @@
-import EnJSON from "static/lang/en.json" with { type: "json" };
+import EnJSON from "@static/lang/en.json" with { type: "json" };
 
 declare global {
     namespace globalThis {
