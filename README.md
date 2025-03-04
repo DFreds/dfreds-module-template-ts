@@ -62,12 +62,24 @@
   - Symlinks the built `/dist` folder to your Foundry data path set in `foundryconfig.json`
 - If you want to use the publish to discord action, then be sure to add a repository secret called `DISCORD_WEBHOOK_URL` that points to your configured webhook. You should also update the content and release username if applicable.
   - To point to role IDs, use "<@&{role_id}>" in the content.
-- If you don't plan on using any 3rd party dependencies, then be sure to remove `vendor.mjs` everywhere that it is mentioned in the project.
+- If you don't plan on using any 3rd party dependencies in the `package.json`, then be sure to remove `vendor.mjs` everywhere that it is mentioned in the project, but especially from the `static/module.json`.
   - Note that the UUID dependency was included to get started. It's likely you don't need this specific dependency, but the module won't build without at least one dependency if the references to `vendor.mjs` exists in the project.
 
 ## Static Files
 
 Assets, fonts, language files, packs, templates, and the module.json can all exist in the `/static` folder in anyway you see fit. When built, any static files or folders will exist in `/dist` directly.
+
+## Build Types
+
+This comes pre-configured with three different build types: development, stage, and production.
+
+- development: When built for development, it will not minify any code or delete the lock file. This is the build type you should be using during active development.
+    - `npm run dev` (one-off build)
+    - `npm run watch` (builds for each `.scss` or `.ts` file change)
+- staging: When built for staging, it will minify the code but not delete the lock file. This is the build type you should be using when switching between different modules, as otherwise a new non-minified module may have conflicts with common names (like `constants.ts`).
+    - `npm run stage`.
+- production: When built for production, it will minify the code and delete the lock file. This is the build type you should be using before releasing the module to users, and is the type used by the github release action.
+    - npm run build
 
 ## Updating Node
 
