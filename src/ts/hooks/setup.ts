@@ -5,7 +5,12 @@ import { libWrapper } from "@static/lib/shim.ts";
 const Setup: Listener = {
     listen(): void {
         Hooks.once("setup", () => {
-            // Various examples
+            if (BUILD_MODE === "development") {
+                // Setup debug mode
+                CONFIG.debug.hooks = true;
+            }
+
+            // Various libWrapper examples
 
             libWrapper.register(
                 MODULE_ID,
