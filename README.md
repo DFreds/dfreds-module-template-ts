@@ -6,11 +6,9 @@
 <h4 align="center">
   <a href="https://foundryvtt.com/packages/dfreds-module-template-ts">Install</a>
   ·
-  <a href="https://dfreds-modules.com">Documentation</a>
-  ·
   <a href="https://discord.gg/Wq8AEV9bWb">Discord</a>
   ·
-  <a href="https://github.com/topics/dfreds-modules">Other Modules</a>
+  <a href="https://dfreds-modules.com">Other Modules</a>
 </h4>
 
 <p align="center">
