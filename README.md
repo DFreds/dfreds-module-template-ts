@@ -4,7 +4,7 @@
 <h1 align="center">DFreds Module Template TS</h1>
 
 <h4 align="center">
-  <a href="https://foundryvtt.com/packages/dfreds-module-template-ts">Install</a>
+  <a href="https://github.com/new?template_name=dfreds-module-template-ts&template_owner=DFreds">Use Template</a>
   ·
   <a href="https://discord.gg/Wq8AEV9bWb">Discord</a>
   ·
