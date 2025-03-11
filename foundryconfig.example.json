@@ -1,4 +1,9 @@
 {
     "dataPath": "/absolute/path/to/your/FoundryVTT/Data",
-    "pf2eRepoPath": "path/to/pf2e/system/repo"
+    "pf2eRepoPath": "path/to/pf2e/system/repo",
+    "fvtt": {
+        "11": "path/to/foundryvtt-11/folder",
+        "12": "path/to/foundryvtt-12/folder",
+        "13": "path/to/foundryvtt-13/folder"
+    }
 }
