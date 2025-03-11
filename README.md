@@ -35,7 +35,10 @@
 
 - Full use of well-defined types provided by [pf2e](https://foundryvtt.com/packages/pf2e)
 - Symlink integration, so you aren't directly messing with the foundry data folder
-- Usage of [nvm](https://github.com/nvm-sh/nvm) and npm for node and package management
+- Use of [nvm](https://github.com/nvm-sh/nvm) and npm for node and package management
+- Use of [vite](https://vite.dev/) for building
+- Commands to build for production, staging, or development
+- Commands to configure and run different versions of FoundryVTT
 - Tools to automatically rename the name of the module, update the types, and enforce code linting
 - Powerful GitHub actions that handle releases and (optionally) posting updates to a Discord channel
 
