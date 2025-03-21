@@ -6,8 +6,8 @@ class Settings {
 
     register(): void {
         game.settings.register(MODULE_ID, this.#SAMPLE, {
-            name: EN_JSON.ModuleTemplate.Settings.SampleSetting.Name,
-            hint: EN_JSON.ModuleTemplate.Settings.SampleSetting.Hint,
+            name: "ModuleTemplate.Settings.SampleSetting.Name",
+            hint: "ModuleTemplate.Settings.SampleSetting.Hint",
             scope: "world",
             config: true,
             default: true,
