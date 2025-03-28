@@ -30,24 +30,41 @@ if (!dataPath || !/\bData$/.test(dataPath)) {
     process.exit(1);
 }
 
-const entryPoint = path.resolve(fvttPath, "resources", "app", "main.js");
-
-if (!fs.existsSync(entryPoint)) {
-    console.error(`Cannot start FoundryVTT. "${entryPoint}" does not exist.`);
-    process.exit(1);
-}
+const execPath = path.resolve(fvttPath, "Foundry Virtual Tabletop.exe");
+const nodeEntryPoint = path.resolve(fvttPath, "resources", "app", "main.js");
 
 const execAsync = promisify(exec);
 
 const startFoundry = async () => {
-    console.log(`Starting FoundryVTT from ${entryPoint}...`);
-
     try {
-        const { stdout, stderr } = await execAsync(
-            `node ${entryPoint} --datapath=${dataPath}`,
-        );
-        console.log(`stdout: ${stdout}`);
-        if (stderr) console.error(`stderr: ${stderr}`);
+        if (fs.existsSync(execPath)) {
+            console.log(`Starting FoundryVTT from ${execPath}...`);
+            console.log(
+                "Make sure to close FoundryVTT instead of using Ctrl-C to stop it.",
+            );
+
+            const quotedPath = `"${execPath}"`;
+            const { stdout, stderr } = await execAsync(quotedPath);
+
+            console.log(`stdout: ${stdout}`);
+
+            if (stderr) console.error(`stderr: ${stderr}`);
+        } else if (fs.existsSync(nodeEntryPoint)) {
+            console.log(`Starting FoundryVTT from ${nodeEntryPoint}...`);
+
+            const { stdout, stderr } = await execAsync(
+                `node ${nodeEntryPoint} --datapath=${dataPath}`,
+            );
+
+            console.log(`stdout: ${stdout}`);
+
+            if (stderr) console.error(`stderr: ${stderr}`);
+        } else {
+            console.error(
+                `Cannot start FoundryVTT. "${nodeEntryPoint}" or "${execPath}" do not exist.`,
+            );
+            process.exit(1);
+        }
     } catch (error) {
         console.error(error);
     }
