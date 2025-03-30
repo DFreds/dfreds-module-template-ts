@@ -14,7 +14,7 @@ const Setup: Listener = {
 
             libWrapper.register(
                 MODULE_ID,
-                "Canvas.prototype._onDrop",
+                "Canvas.prototype.draw",
                 function (this: any, wrapped: AnyFunction, ...args: any) {
                     console.log(this);
                     wrapped(...args);
