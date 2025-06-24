@@ -1,7 +1,7 @@
 {
     "id": "dfreds-module-template-ts",
     "title": "DFreds Module Template TS",
-    "description": "A FoundryVTT template module using typescript and vite",
+    "description": "A FoundryVTT module template using Typescript",
     "version": "1.0.0",
     "compatibility": {
         "minimum": 13,

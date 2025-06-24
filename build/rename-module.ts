@@ -22,6 +22,17 @@ const newModuleName: string | undefined = (
     })
 ).value;
 
+const newModuleDescription: string =
+    (
+        await prompts({
+            type: "text",
+            name: "value",
+            format: (v: string) => v.replace(/\W*$/, "").trim(),
+            message:
+                "Enter the description of your module. (Example: A FoundryVTT module template using TypeScript)",
+        })
+    ).value ?? "";
+
 if (!newModuleIdentifier) {
     console.error("No module identifier entered.");
     process.exit(1);
@@ -72,7 +83,7 @@ const filesToReplaceStrings = fs
 filesToReplaceStrings.push(...filesToInclude);
 
 console.log(
-    `Changing identifier and name in the following files:\n${filesToReplaceStrings.join("\n")}`,
+    `Changing identifier name, and description in the following files:\n${filesToReplaceStrings.join("\n")}`,
 );
 
 try {
@@ -80,7 +91,11 @@ try {
         const fileData = fs.readFileSync(file, { encoding: "utf8" });
         const replaced = fileData
             .replace(/dfreds-module-template-ts/g, newModuleIdentifier)
-            .replace(/DFreds Module Template TS/g, newModuleName);
+            .replace(/DFreds Module Template TS/g, newModuleName)
+            .replace(
+                /A FoundryVTT module template using Typescript/g,
+                newModuleDescription,
+            );
 
         fs.writeFileSync(file, replaced);
     }
