@@ -1,10 +1,13 @@
 import fs from "fs";
 import fsExtra from "fs-extra";
 import path from "path";
-// @ts-expect-error Expect error when the `foundryconfig.example.json` was not copied
-import { pf2eRepoPath } from "../foundryconfig.json";
+import foundryConfig from "../foundryconfig.json" with { type: "json" };
 
-const sourceDataPath = path.resolve(pf2eRepoPath, "types", "foundry");
+const sourceDataPath = path.resolve(
+    foundryConfig.pf2eRepoPath,
+    "types",
+    "foundry",
+);
 const destinationDataPath = path.resolve(process.cwd(), "types", "foundry");
 
 const sourceRepoPathStats = fs.lstatSync(sourceDataPath, {

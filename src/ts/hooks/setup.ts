@@ -1,6 +1,8 @@
+import type Application from "@client/appv1/api/application-v1.d.mts";
 import { MODULE_ID } from "../constants.ts";
 import { Listener } from "./index.ts";
 import { libWrapper } from "@static/lib/shim.ts";
+import type Token from "@client/canvas/placeables/token.d.mts";
 
 const Setup: Listener = {
     listen(): void {

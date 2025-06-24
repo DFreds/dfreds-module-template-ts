@@ -2,22 +2,30 @@ import fs from "fs";
 import path from "path";
 import process from "process";
 import prompts from "prompts";
-import { dataPath } from "../foundryconfig.json";
-import { id as MODULE_ID } from "../static/module.json";
+import foundryConfig from "../foundryconfig.json" with { type: "json" };
+import moduleJSON from "../static/module.json" with { type: "json" };
 
-if (!dataPath || !/\bData$/.test(dataPath)) {
-    console.error(`"${dataPath}" does not look like a Foundry data folder.`);
+if (!foundryConfig.dataPath || !/\bData$/.test(foundryConfig.dataPath)) {
+    console.error(
+        `"${foundryConfig.dataPath}" does not look like a Foundry data folder.`,
+    );
     process.exit(1);
 }
 
-const dataPathStats = fs.lstatSync(dataPath, { throwIfNoEntry: false });
+const dataPathStats = fs.lstatSync(foundryConfig.dataPath, {
+    throwIfNoEntry: false,
+});
 
 if (!dataPathStats?.isDirectory()) {
-    console.error(`No folder found at "${dataPath}"`);
+    console.error(`No folder found at "${foundryConfig.dataPath}"`);
     process.exit(1);
 }
 
-const symlinkPath = path.resolve(dataPath, "modules", MODULE_ID);
+const symlinkPath = path.resolve(
+    foundryConfig.dataPath,
+    "modules",
+    moduleJSON.id,
+);
 const symlinkStats = fs.lstatSync(symlinkPath, { throwIfNoEntry: false });
 
 if (symlinkStats) {
@@ -31,7 +39,7 @@ if (symlinkStats) {
             type: "confirm",
             name: "value",
             initial: false,
-            message: `A "${MODULE_ID}" ${atPath} already exists in the "modules" subfolder. Replace with new symlink?`,
+            message: `A "${moduleJSON.id}" ${atPath} already exists in the "modules" subfolder. Replace with new symlink?`,
         })
     ).value;
 

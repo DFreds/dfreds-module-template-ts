@@ -1,3 +1,5 @@
+import type Module from "@client/packages/module.d.mts";
+
 interface ThisModule extends Module {
     api: ThisApi;
 }
