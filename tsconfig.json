@@ -35,12 +35,12 @@
             ],
             "@client/*": [
                 "./types/foundry/client/*"
-            ],
+            ]
         },
         "types": [
             "jest",
             "jquery",
-            "node",
+            "node"
         ],
         "typeRoots": [
             "./node_modules/@types",

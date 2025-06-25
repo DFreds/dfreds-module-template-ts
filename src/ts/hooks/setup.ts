@@ -16,14 +16,6 @@ const Setup: Listener = {
 
             libWrapper.register(
                 MODULE_ID,
-                "Canvas.prototype.draw",
-                function (this: any, wrapped: AnyFunction, ...args: any) {
-                    console.log(this);
-                    wrapped(...args);
-                },
-            );
-            libWrapper.register(
-                MODULE_ID,
                 "Application.prototype.bringToTop",
                 function (this: Application, wrapped: () => void) {
                     wrapped();
@@ -37,14 +29,6 @@ const Setup: Listener = {
                     r.then(() => console.log("yay"));
                     return r;
                 },
-            );
-            libWrapper.register(
-                MODULE_ID,
-                "Token.prototype._canDrag",
-                function (this: any, wrapped: AnyFunction, ...args: any) {
-                    return wrapped(...args);
-                },
-                "WRAPPER",
             );
             libWrapper.register(
                 MODULE_ID,

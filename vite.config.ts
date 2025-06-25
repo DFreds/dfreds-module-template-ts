@@ -93,7 +93,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                     assetFileNames: ({ name }): string =>
                         name === "style.css"
                             ? "styles/dfreds-module-template-ts.css"
-                            : name ?? "",
+                            : (name ?? ""),
                     chunkFileNames: "[name].mjs",
                     entryFileNames: "dfreds-module-template-ts.mjs",
                     manualChunks: {
