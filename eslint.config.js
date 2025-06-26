@@ -44,7 +44,7 @@ export default tseslint.config(
                 "error",
                 { allowInterfaces: "with-single-extends" },
             ],
-            "@typescript-eslint/no-explicit-any": "warn",
+            "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/no-namespace": [
                 "error",
                 { allowDeclarations: true },
