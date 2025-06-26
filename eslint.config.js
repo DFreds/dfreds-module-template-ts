@@ -8,7 +8,15 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-    { ignores: ["dist/**/*", "packs/**/*", "static/lib/**/*", "*.mjs"] },
+    {
+        ignores: [
+            "dist/**/*",
+            "packs/**/*",
+            "static/lib/**/*",
+            "*.mjs",
+            "types/**/*",
+        ],
+    },
     { plugins: { jest, prettier, json, "@typescript-eslint": ts } },
     {
         files: ["**/*.ts"],
