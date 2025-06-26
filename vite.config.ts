@@ -83,6 +83,11 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                 fileName: "module",
             },
             rollupOptions: {
+                external: [
+                    // Foundry VTT internal modules
+                    /^@client\//,
+                    /^@common\//,
+                ],
                 output: {
                     assetFileNames: ({ name }): string =>
                         name === "style.css"
