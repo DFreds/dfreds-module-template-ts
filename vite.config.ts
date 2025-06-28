@@ -7,7 +7,7 @@ import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
-const PACKAGE_ID = "modules/dfreds-module-template-ts";
+const PACKAGE_ID = `modules/${packageJSON.name}`;
 
 const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
     const buildMode =
