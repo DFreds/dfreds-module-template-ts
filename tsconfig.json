@@ -44,15 +44,14 @@
         ],
         "typeRoots": [
             "./node_modules/@types",
-            "./types/foundry",
-            "./types/libWrapper"
+            "./types/foundry"
         ]
     },
     "include": [
-        "./build/**/*",
         "./src/**/*",
         "./tests/**/*.ts",
         "./types/foundry/global-external.d.mts",
+        "./types/libWrapper/index.d.ts",
         "./vite.config.ts"
     ],
     "watchOptions": {

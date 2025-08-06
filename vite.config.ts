@@ -2,10 +2,10 @@ import * as Vite from "vite";
 import checker from "vite-plugin-checker";
 import esbuild from "esbuild";
 import fs from "fs";
-import packageJSON from "./package.json" with { type: "json" };
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import packageJSON from "./package.json" with { type: "json" };
 
 const PACKAGE_ID = "modules/dfreds-module-template-ts";
 
@@ -17,10 +17,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
               ? "stage"
               : "development";
     const outDir = "dist";
-    const plugins = [
-        checker({ typescript: true }),
-        tsconfigPaths({ loose: true }),
-    ];
+    const plugins = [checker({ typescript: true }), tsconfigPaths()];
 
     console.log(`Build mode: ${buildMode}`);
 
@@ -89,10 +86,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                     /^@common\//,
                 ],
                 output: {
-                    assetFileNames: ({ name }): string =>
-                        name === "style.css"
-                            ? "styles/dfreds-module-template-ts.css"
-                            : (name ?? ""),
+                    assetFileNames: "styles/dfreds-module-template-ts.css",
                     chunkFileNames: "[name].mjs",
                     entryFileNames: "dfreds-module-template-ts.mjs",
                     manualChunks: {
@@ -101,10 +95,21 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                             : [],
                     },
                 },
-                watch: { buildDelay: 100 },
             },
             target: "es2022",
         },
+
+        // About server options:
+        // - Set `open` to boolean `false` to not open a browser window automatically. This is
+        // useful if you set up a debugger instance in your IDE and launch it with the URL:
+        // 'http://localhost:30001/game'.
+        //
+        // - The top proxy entry redirects requests under the module path for `style.css` and
+        // following standard static directories: `assets`, `lang`, and `packs` and will pull those
+        // resources from the main Foundry / 30000 server.
+        // This is necessary to reference the dev resources as the root is `/src` and there is no
+        // public / static resources served with this particular Vite configuration. Modify the
+        // proxy rule as necessary for your static resources / project.
         server: {
             port: 30001,
             open: false,
