@@ -7,10 +7,7 @@ import type Token from "@client/canvas/placeables/token.d.mts";
 const Setup: Listener = {
     listen(): void {
         Hooks.once("setup", () => {
-            if (BUILD_MODE === "development") {
-                // Setup debug mode
-                CONFIG.debug.hooks = true;
-            }
+            CONFIG.debug.hooks = BUILD_MODE === "development";
 
             // Various libWrapper examples
 
