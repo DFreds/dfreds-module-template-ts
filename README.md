@@ -40,7 +40,8 @@
 - Commands to build for production, staging, or development
 - Commands to configure and run different versions of FoundryVTT
 - Tools to automatically rename the name of the module, update the types, and enforce code linting
-- Powerful GitHub actions that handle releases and (optionally) posting updates to a Discord channel
+- Powerful GitHub actions that handle releases, (optionally) posting updates to
+a Discord channel, and optionally publishing the release to Foundry
 
 ## Getting Started
 
