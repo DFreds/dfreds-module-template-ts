@@ -16,7 +16,7 @@ class Settings {
     }
 
     get sample(): boolean {
-        return game.settings.get(MODULE_ID, this.#SAMPLE) as boolean;
+        return game.settings.get(MODULE_ID, this.#SAMPLE) as unknown as boolean;
     }
 
     async setSample(value: boolean): Promise<unknown> {

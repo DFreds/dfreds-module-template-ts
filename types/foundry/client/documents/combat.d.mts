@@ -10,7 +10,7 @@ import Document from "@common/abstract/document.mjs";
 import EmbeddedCollection from "@common/abstract/embedded-collection.mjs";
 import { ChatMessageCreateOperation } from "@common/documents/chat-message.mjs";
 import BaseCombat from "@common/documents/combat.mjs";
-import { Combatant, TokenDocument, User } from "./_module.mjs";
+import { Actor, Combatant, TokenDocument, User } from "./_module.mjs";
 import { CombatTurnEventContext } from "./_types.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 
@@ -59,6 +59,9 @@ export default class Combat extends ClientBaseCombat {
     /** Is this combat active in the current scene? */
     get isActive(): boolean;
 
+    /** Is this Combat currently being viewed? */
+    get isView(): boolean;
+
     /* -------------------------------------------- */
     /*  Methods                                     */
     /* -------------------------------------------- */
@@ -73,15 +76,16 @@ export default class Combat extends ClientBaseCombat {
 
     /**
      * Get a Combatant using its Token id
-     * @param tokenId The id of the Token for which to acquire the combatant
+     * @param token A Token ID or a TokenDocument instance
+     * @returns An array of Combatants which represent the Token
      */
-    getCombatantByToken(tokenId: string): Combatant<this> | undefined;
+    getCombatantsByToken(token: string | TokenDocument): Combatant[];
 
     /**
-     * Get a Combatant using its Actor id
-     * @param actorId The id of the Actor for which to acquire the combatant
+     * Get a Combatant that represents the given Actor or Actor ID.
+     * @param actor An Actor ID or an Actor instance
      */
-    getCombatantByActor(actorId: string): Combatant<this> | undefined;
+    getCombatantsByActor(actor: Actor | string): Combatant[];
 
     /**
      * Calculate the time delta between two turns.
@@ -101,8 +105,6 @@ export default class Combat extends ClientBaseCombat {
 
     /** Advance the combat to the next turn */
     nextTurn(): Promise<this>;
-
-    override prepareDerivedData(): void;
 
     /** Rewind the combat to the previous round */
     previousRound(): Promise<this>;
@@ -291,6 +293,9 @@ export default class Combat extends ClientBaseCombat {
      * @param [combatant]       The new active combatant
      */
     protected _getCurrentState(combatant?: Combatant<this>): CombatHistoryData;
+
+    /** Update display of Token combat turn markers. */
+    protected _updateTurnMarkers(): void;
 
     /* -------------------------------------------- */
     /*  Turn Events                                 */
