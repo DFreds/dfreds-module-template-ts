@@ -37,22 +37,11 @@
         "noErrorTruncation": true,
         "paths": {
             "@static/*": ["./static/*"],
-            "@common/*": [
-                "./types/foundry/common/*"
-            ],
-            "@client/*": [
-                "./types/foundry/client/*"
-            ]
+            "@common/*": ["./types/foundry/common/*"],
+            "@client/*": ["./types/foundry/client/*"]
         },
-        "types": [
-            "jest",
-            "jquery",
-            "node"
-        ],
-        "typeRoots": [
-            "./node_modules/@types",
-            "./types/foundry"
-        ]
+        "types": ["jest", "jquery", "node"],
+        "typeRoots": ["./node_modules/@types", "./types/foundry"]
     },
     "include": [
         "./src/**/*",
@@ -63,10 +52,6 @@
     ],
     "watchOptions": {
         "fallbackPolling": "dynamicpriority",
-        "excludeDirectories": [
-            "dist",
-            "packs",
-            "static"
-        ]
+        "excludeDirectories": ["dist", "packs", "static"]
     }
 }
