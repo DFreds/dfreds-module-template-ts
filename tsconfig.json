@@ -1,13 +1,19 @@
 {
     "compilerOptions": {
-        "target": "ES2022",
+        "target": "es2024",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "lib": [
-            "ES2023",
-            "ESNext",
+            "ES2024",
+            "ESNext.Array",
+            "ESNext.AsyncIterable",
+            "ESNext.Collection",
+            "ESNext.Intl",
+            "ESNext.Iterator",
+            "ESNext.Promise",
             "DOM",
-            "DOM.Iterable"
+            "DOM.Iterable",
+            "DOM.AsyncIterable"
         ],
         "noEmit": true,
         "strict": true,
@@ -24,6 +30,7 @@
         "isolatedModules": true,
         "outDir": "dist",
         "allowUnusedLabels": false,
+        "allowUmdGlobalAccess": true,
         "removeComments": false,
         "resolveJsonModule": true,
         "useDefineForClassFields": true,
