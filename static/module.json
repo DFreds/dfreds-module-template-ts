@@ -4,9 +4,9 @@
     "description": "A FoundryVTT module template using Typescript",
     "version": "1.0.0",
     "compatibility": {
-        "minimum": 13,
-        "verified": 13,
-        "maximum": 13
+        "minimum": 14,
+        "verified": 14,
+        "maximum": 14
     },
     "esmodules": ["vendor.mjs", "dfreds-module-template-ts.mjs"],
     "scripts": [],
