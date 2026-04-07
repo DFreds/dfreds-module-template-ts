@@ -3,11 +3,13 @@ import { MODULE_ID } from "../constants.ts";
 import { Listener } from "./index.ts";
 import { libWrapper } from "@static/lib/shim.ts";
 import type Token from "@client/canvas/placeables/token.d.mts";
+import { v4 } from "uuid";
 
 const Setup: Listener = {
     listen(): void {
         Hooks.once("setup", () => {
             if (BUILD_MODE === "development") {
+                console.log("BUILD_MODE is development");
                 CONFIG.debug.hooks = true;
             }
 
@@ -17,6 +19,7 @@ const Setup: Listener = {
                 MODULE_ID,
                 "Application.prototype.bringToTop",
                 function (this: Application, wrapped: () => void) {
+                    console.log("Application brought to top");
                     wrapped();
                 },
             );
@@ -38,6 +41,7 @@ const Setup: Listener = {
                     event: Event,
                 ) {
                     const result = wrapped(event);
+                    console.log("Token dragged, auto generated UUID: ", v4());
                     return result;
                 },
                 "WRAPPER",
@@ -58,6 +62,7 @@ async function onSoundStartWrapper(
     wrapped: (sound: PlaylistSound<null>) => void,
     sound: PlaylistSound<null>,
 ): Promise<void> {
+    console.log("Sound started");
     wrapped(sound);
 }
 
