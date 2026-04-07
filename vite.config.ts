@@ -52,11 +52,11 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
         fs.writeFileSync("./index.html", `<h1>${message}</h1>\n`);
         if (!fs.existsSync("./styles")) fs.mkdirSync("./styles");
         fs.writeFileSync(
-            "./styles/dfreds-module-template-ts.css",
+            `./styles/${MODULE_ID}.css`,
             `/** ${message} */\n`,
         );
         fs.writeFileSync(
-            "./dfreds-module-template-ts.mjs",
+            `./${MODULE_ID}.mjs`,
             `/** ${message} */\n\nwindow.global = window;\nimport "./src/ts/module.ts";\n`,
         );
         fs.writeFileSync("./vendor.mjs", `/** ${message} */\n`);
@@ -95,6 +95,11 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                 fileName: MODULE_ID,
             },
             rolldownOptions: {
+                external: [
+                    // Foundry VTT internal modules
+                    /^@client\//,
+                    /^@common\//,
+                ],
                 output: {
                     assetFileNames: `styles/${MODULE_ID}.css`,
                     chunkFileNames: "[name].mjs",
@@ -103,23 +108,6 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                 },
                 watch: { buildDelay: 100 },
             },
-            // rollupOptions: {
-            //     external: [
-            //         // Foundry VTT internal modules
-            //         /^@client\//,
-            //         /^@common\//,
-            //     ],
-            //     output: {
-            //         assetFileNames: "styles/dfreds-module-template-ts.css",
-            //         chunkFileNames: "[name].mjs",
-            //         entryFileNames: "dfreds-module-template-ts.mjs",
-            //         manualChunks: {
-            //             vendor: Object.keys(packageJSON.dependencies)
-            //                 ? Object.keys(packageJSON.dependencies)
-            //                 : [],
-            //         },
-            //     },
-            // },
             target: "es2024",
         },
 
@@ -182,7 +170,7 @@ function deleteLockFilePlugin(): Vite.Plugin {
             const outDir = outputOptions.dir ?? "";
             const lockFile = path.resolve(
                 outDir,
-                "dfreds-module-template-ts.lock",
+                `${MODULE_ID}.lock`,
             );
             fs.rmSync(lockFile);
         },
