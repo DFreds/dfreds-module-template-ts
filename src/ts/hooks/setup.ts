@@ -34,7 +34,7 @@ const Setup: Listener = {
             );
             libWrapper.register(
                 MODULE_ID,
-                "Token.prototype._onDragLeftStart",
+                "foundry.canvas.placeables.Token.prototype._onDragLeftStart",
                 async function (
                     this: Token,
                     wrapped: (event: any) => any,
