@@ -23,6 +23,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Compile packs
+        run: npm run compile-packs
+
       - name: Build production
         run: npm run build
 
