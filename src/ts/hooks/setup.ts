@@ -35,11 +35,7 @@ const Setup: Listener = {
             libWrapper.register(
                 MODULE_ID,
                 "foundry.canvas.placeables.Token.prototype._onDragLeftStart",
-                async function (
-                    this: Token,
-                    wrapped: (event: any) => any,
-                    event: Event,
-                ) {
+                async function (this: Token, wrapped: (event: any) => any, event: Event) {
                     const result = wrapped(event);
                     console.log("Token dragged, auto generated UUID: ", v4());
                     return result;
@@ -47,12 +43,7 @@ const Setup: Listener = {
                 "WRAPPER",
             );
             // Playlist overrides
-            libWrapper.register(
-                MODULE_ID,
-                "Playlist.prototype._onSoundStart",
-                onSoundStartWrapper,
-                "WRAPPER",
-            );
+            libWrapper.register(MODULE_ID, "Playlist.prototype._onSoundStart", onSoundStartWrapper, "WRAPPER");
         });
     },
 };
