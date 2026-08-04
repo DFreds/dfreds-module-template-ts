@@ -33,14 +33,14 @@
 
 ## Features
 
-- Full use of well-defined types provided by [pf2e](https://foundryvtt.com/packages/pf2e)
+- Full use of well-defined Foundry types from [@dfreds/foundry-types](https://www.npmjs.com/package/@dfreds/foundry-types), installed like any other dependency
 - Symlink integration, so you aren't directly messing with the foundry data folder
 - Use of [nvm](https://github.com/nvm-sh/nvm) and npm for node and package management
 - Use of [vite](https://vite.dev/) for building
 - Commands to handle extracting and compiling Foundry compendium packs
 - Commands to build for production, staging, or development
 - Commands to configure and run different versions of FoundryVTT
-- Tools to automatically rename the name of the module, update the types, and enforce code linting
+- Tools to automatically rename the name of the module and enforce code linting
 - Powerful GitHub actions that handle releases, (optionally) posting updates to
 a Discord channel, and optionally publishing the release to Foundry
 
