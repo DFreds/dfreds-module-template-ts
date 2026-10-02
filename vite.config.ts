@@ -21,19 +21,9 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
 
     console.log(`Build mode: ${buildMode}`);
 
-    if (buildMode === "production") {
-        plugins.push(
-            deleteLockFilePlugin(),
-            ...viteStaticCopy({
-                targets: [{ src: "README.md", dest: "." }],
-            }),
-        );
-    } else if (buildMode === "stage") {
-        plugins.push(
-            ...viteStaticCopy({
-                targets: [{ src: "README.md", dest: "." }],
-            }),
-        );
+    if (buildMode === "production" || buildMode === "stage") {
+        plugins.push(...viteStaticCopy({ targets: [{ src: "README.md", dest: "." }] }));
+        if (buildMode === "production") plugins.push(deleteLockFilePlugin());
     } else {
         plugins.push(
             touchVendorMjsPlugin(outDir),
