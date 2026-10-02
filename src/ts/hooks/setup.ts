@@ -3,7 +3,6 @@ import { MODULE_ID } from "../constants.ts";
 import { Listener } from "./index.ts";
 import { libWrapper } from "@static/lib/shim.ts";
 import type Token from "@client/canvas/placeables/token.d.mts";
-import { v4 } from "uuid";
 
 const Setup: Listener = {
     listen(): void {
@@ -37,7 +36,7 @@ const Setup: Listener = {
                 "foundry.canvas.placeables.Token.prototype._onDragLeftStart",
                 async function (this: Token, wrapped: (event: any) => any, event: Event) {
                     const result = wrapped(event);
-                    console.log("Token dragged, auto generated UUID: ", v4());
+                    console.log("Token dragged, auto generated UUID: ", crypto.randomUUID());
                     return result;
                 },
                 "WRAPPER",

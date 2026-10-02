@@ -51,8 +51,5 @@
         "vite": "^8.0.10",
         "vite-plugin-checker": "^0.13.0",
         "vite-plugin-static-copy": "^4.1.0"
-    },
-    "dependencies": {
-        "uuid": "^13.0.0"
     }
 }
