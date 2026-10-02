@@ -69,10 +69,9 @@ const filesToReplaceStrings = fs
     })
     .map((file: string) => path.resolve(dirToSearch, file))
     .filter((filePath: string) => {
-        const isIncluded =
-            dirsToInclude.findIndex((includeDir) =>
-                filePath.startsWith(includeDir),
-            ) !== -1;
+        const isIncluded = dirsToInclude.some((includeDir) =>
+            filePath.startsWith(includeDir),
+        );
 
         const isDirectory = fs.lstatSync(filePath).isDirectory();
 
