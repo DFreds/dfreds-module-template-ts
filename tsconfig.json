@@ -40,7 +40,7 @@
             "@common/*": ["./node_modules/@dfreds/foundry-types/common/*"],
             "@client/*": ["./node_modules/@dfreds/foundry-types/client/*"]
         },
-        "types": ["jest", "jquery", "node"],
+        "types": ["jquery", "node"],
         "typeRoots": ["./node_modules/@types"]
     },
     "include": [
