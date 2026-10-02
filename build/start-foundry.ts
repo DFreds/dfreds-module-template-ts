@@ -39,47 +39,26 @@ const macApp = fvttPath;
 
 const execAsync = promisify(exec);
 
-const startFoundry = async () => {
-    try {
-        if (fs.existsSync(windowsExecPath)) {
-            console.log(`Starting FoundryVTT from ${windowsExecPath}...`);
-            console.log(
-                "Make sure to close FoundryVTT instead of using Ctrl-C to stop it.",
-            );
+let command: string;
+if (fs.existsSync(windowsExecPath)) {
+    console.log(`Starting FoundryVTT from ${windowsExecPath}...`);
+    console.log("Make sure to close FoundryVTT instead of using Ctrl-C to stop it.");
+    command = `"${windowsExecPath}"`;
+} else if (fs.existsSync(nodeEntryPoint)) {
+    console.log(`Starting FoundryVTT from ${nodeEntryPoint}...`);
+    command = `node ${nodeEntryPoint} --datapath=${foundryConfig.dataPath}`;
+} else if (macApp.endsWith(".app")) {
+    console.log(`Starting ${macApp}...`);
+    command = `open -a "${macApp}" --env=FOUNDRY_VTT_DATA_PATH="${foundryConfig.dataPath.substring(0, foundryConfig.dataPath.length - 5)}"`;
+} else {
+    console.error(`Cannot start FoundryVTT. "${fvttPath}" is not a valid Foundry path.`);
+    process.exit(1);
+}
 
-            const quotedPath = `"${windowsExecPath}"`;
-            const { stdout, stderr } = await execAsync(quotedPath);
-
-            console.log(`stdout: ${stdout}`);
-
-            if (stderr) console.error(`stderr: ${stderr}`);
-        } else if (fs.existsSync(nodeEntryPoint)) {
-            console.log(`Starting FoundryVTT from ${nodeEntryPoint}...`);
-
-            const { stdout, stderr } = await execAsync(
-                `node ${nodeEntryPoint} --datapath=${foundryConfig.dataPath}`,
-            );
-
-            console.log(`stdout: ${stdout}`);
-
-            if (stderr) console.error(`stderr: ${stderr}`);
-        } else if (macApp.endsWith(".app")) {
-            console.log(`Starting ${macApp}...`);
-            const { stdout, stderr } = await execAsync(
-                `open -a "${macApp}" --env=FOUNDRY_VTT_DATA_PATH="${foundryConfig.dataPath.substring(0, foundryConfig.dataPath.length - 5)}"`,
-            );
-            console.log(`stdout: ${stdout}`);
-
-            if (stderr) console.error(`stderr: ${stderr}`);
-        } else {
-            console.error(
-                `Cannot start FoundryVTT. "${fvttPath}" is not a valid Foundry path.`,
-            );
-            process.exit(1);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-startFoundry().catch(console.error);
+try {
+    const { stdout, stderr } = await execAsync(command);
+    console.log(`stdout: ${stdout}`);
+    if (stderr) console.error(`stderr: ${stderr}`);
+} catch (error) {
+    console.error(error);
+}
