@@ -152,9 +152,6 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
 function deleteLockFilePlugin(): Vite.Plugin {
     return {
         name: "delete-lock-file-plugin",
-        resolveId(source) {
-            return source === "virtual-module" ? source : null;
-        },
         writeBundle(outputOptions) {
             const outDir = outputOptions.dir ?? "";
             const lockFile = path.resolve(
