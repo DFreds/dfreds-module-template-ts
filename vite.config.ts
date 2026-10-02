@@ -16,7 +16,8 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
     const outDir = "dist";
 
     const plugins = [
-        checker({ typescript: true })
+        checker({ typescript: true }),
+        touchVendorMjsPlugin(outDir),
     ];
 
     console.log(`Build mode: ${buildMode}`);
@@ -26,7 +27,6 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
         if (buildMode === "production") plugins.push(deleteLockFilePlugin());
     } else {
         plugins.push(
-            touchVendorMjsPlugin(outDir),
             handleHotUpdateForEnLang(outDir),
             handleHotUpdateForHandlebars(outDir),
         );
@@ -154,13 +154,13 @@ function deleteLockFilePlugin(): Vite.Plugin {
 }
 
 function touchVendorMjsPlugin(outDir: string): Vite.Plugin {
-    // Foundry expects all esm files listed in module.json to exist: create empty vendor module when in dev mode
+    // Foundry expects all esm files listed in module.json to exist: create an empty vendor module when no vendor chunk is built
     return {
         name: "touch-vendor-mjs",
         apply: "build",
         writeBundle: {
             async handler() {
-                fs.closeSync(fs.openSync(path.resolve(outDir, "vendor.mjs"), "w"));
+                fs.closeSync(fs.openSync(path.resolve(outDir, "vendor.mjs"), "a"));
             },
         },
     };
