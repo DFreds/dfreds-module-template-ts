@@ -1,15 +1,11 @@
 class HandlebarHelpers {
-    constructor() {}
-
     register(): void {
-        // this.#registerDummyHandlebar();
+        this.#registerUppercase();
     }
 
-    // #registerDummyHandlebar() {
-    //     Handlebars.registerHelper("dummyHandlebar", () => {
-    //         return true;
-    //     });
-    // }
+    #registerUppercase(): void {
+        Handlebars.registerHelper("uppercase", (text: string) => text.toUpperCase());
+    }
 }
 
 export { HandlebarHelpers };
