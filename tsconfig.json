@@ -45,7 +45,6 @@
     },
     "include": [
         "./src/**/*",
-        "./tests/**/*.ts",
         "./types/libWrapper/index.d.ts",
         "./vite.config.ts"
     ],

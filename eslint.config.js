@@ -68,10 +68,6 @@ export default defineConfig(
         },
     },
     {
-        files: ["tests/**/*"],
-        rules: { "global-require": "off" },
-    },
-    {
         files: ["**/*.json"],
         ignores: ["package-lock.json"],
         language: "json/json",

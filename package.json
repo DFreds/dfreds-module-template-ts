@@ -16,7 +16,6 @@
         "rename-module": "tsx ./build/rename-module.ts",
         "watch": "tsc && npm run clean && vite build --watch --mode development",
         "link": "tsx ./build/link-foundry.ts",
-        "test": "jest",
         "lint": "npm run lint:ts && npm run lint:json && npm run prettier:scss",
         "lint:ts": "eslint ./src",
         "prettier:scss": "prettier --check src/styles",
