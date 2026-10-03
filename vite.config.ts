@@ -160,8 +160,8 @@ function handleHotUpdateForEnLang(outDir: string): Vite.Plugin {
         name: "hmr-handler-en-lang",
         apply: "serve",
         handleHotUpdate(context) {
-            if (context.file.startsWith(outDir)) return;
-            if (!context.file.endsWith("en.json")) return;
+            if (context.file.startsWith(path.resolve(outDir))) return;
+            if (!context.file.endsWith("/lang/en.json")) return;
 
             const basePath = context.file.slice(context.file.indexOf("lang/"));
             console.debug(`Updating lang file at ${basePath}`);
@@ -181,7 +181,7 @@ function handleHotUpdateForHandlebars(outDir: string): Vite.Plugin {
         name: "hmr-handler-handlebars",
         apply: "serve",
         handleHotUpdate(context) {
-            if (context.file.startsWith(outDir)) return;
+            if (context.file.startsWith(path.resolve(outDir))) return;
             if (!context.file.endsWith(".hbs")) return;
 
             const basePath = context.file.slice(context.file.indexOf("templates/"));
