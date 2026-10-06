@@ -1,5 +1,6 @@
 import type Application from "@client/appv1/api/application-v1.d.mts";
 import { MODULE_ID } from "../constants.ts";
+import { log } from "../logger.ts";
 import { Listener } from "./index.ts";
 import { libWrapper } from "@static/lib/shim.ts";
 import type Token from "@client/canvas/placeables/token.d.mts";
@@ -8,7 +9,6 @@ const Setup: Listener = {
     listen(): void {
         Hooks.once("setup", () => {
             if (BUILD_MODE === "development") {
-                console.log("BUILD_MODE is development");
                 CONFIG.debug.hooks = true;
             }
 
@@ -18,7 +18,7 @@ const Setup: Listener = {
                 MODULE_ID,
                 "Application.prototype.bringToTop",
                 function (this: Application, wrapped: () => void) {
-                    console.log("Application brought to top");
+                    log("Application brought to top");
                     wrapped();
                 },
             );
@@ -27,7 +27,7 @@ const Setup: Listener = {
                 "Application.prototype.minimize",
                 function (this: Application, wrapped: () => Promise<boolean>) {
                     const r = wrapped();
-                    r.then(() => console.log("yay"));
+                    r.then(() => log("yay"));
                     return r;
                 },
             );
@@ -36,7 +36,7 @@ const Setup: Listener = {
                 "foundry.canvas.placeables.Token.prototype._onDragLeftStart",
                 async function (this: Token, wrapped: (event: any) => any, event: Event) {
                     const result = wrapped(event);
-                    console.log("Token dragged, auto generated UUID: ", crypto.randomUUID());
+                    log(`Token dragged, auto generated UUID: ${crypto.randomUUID()}`);
                     return result;
                 },
                 "WRAPPER",
@@ -52,7 +52,7 @@ async function onSoundStartWrapper(
     wrapped: (sound: PlaylistSound<null>) => void,
     sound: PlaylistSound<null>,
 ): Promise<void> {
-    console.log("Sound started");
+    log("Sound started");
     wrapped(sound);
 }
 
