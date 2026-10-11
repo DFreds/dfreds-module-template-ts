@@ -1,15 +1,12 @@
-import { exec } from "child_process";
+import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import process from "process";
 import prompts from "prompts";
-import { promisify } from "util";
 import foundryConfig from "../foundryconfig.json" with { type: "json" };
 
 if (!foundryConfig.dataPath || !/\bData$/.test(foundryConfig.dataPath)) {
-    console.error(
-        `"${foundryConfig.dataPath}" does not look like a Foundry data folder.`,
-    );
+    console.error(`"${foundryConfig.dataPath}" does not look like a Foundry data folder.`);
     process.exit(1);
 }
 
@@ -25,40 +22,50 @@ const fvttVersion = (
     })
 ).value as string;
 
-const fvttPath =
-    foundryConfig.fvtt[fvttVersion as keyof typeof foundryConfig.fvtt];
+const fvttPath = foundryConfig.fvtt[fvttVersion as keyof typeof foundryConfig.fvtt];
 
 if (!fvttPath) {
     console.error(`FoundryVTT version "${fvttVersion}" not found.`);
     process.exit(1);
 }
 
-const windowsExecPath = path.resolve(fvttPath, "Foundry Virtual Tabletop.exe");
-const nodeEntryPoint = path.resolve(fvttPath, "resources", "app", "main.js");
-const macApp = fvttPath;
+const execPath = path.resolve(fvttPath, "App", "Foundry Virtual Tabletop.exe");
+const nodeEntryPoint = path.resolve(fvttPath, "main.js");
+const oldNodeEntryPoint = path.resolve(fvttPath, "resources", "app", "main.js");
 
-const execAsync = promisify(exec);
+const dataPathArg = `--dataPath=${path.dirname(foundryConfig.dataPath)}`;
 
 let command: string;
-if (fs.existsSync(windowsExecPath)) {
-    console.log(`Starting FoundryVTT from ${windowsExecPath}...`);
+let args: string[];
+
+if (fs.existsSync(execPath)) {
+    console.log(`Starting FoundryVTT from ${execPath}...`);
     console.log("Make sure to close FoundryVTT instead of using Ctrl-C to stop it.");
-    command = `"${windowsExecPath}"`;
+    command = execPath;
+    args = [dataPathArg];
 } else if (fs.existsSync(nodeEntryPoint)) {
     console.log(`Starting FoundryVTT from ${nodeEntryPoint}...`);
-    command = `node ${nodeEntryPoint} --datapath=${foundryConfig.dataPath}`;
-} else if (macApp.endsWith(".app")) {
-    console.log(`Starting ${macApp}...`);
-    command = `open -a "${macApp}" --env=FOUNDRY_VTT_DATA_PATH="${foundryConfig.dataPath.substring(0, foundryConfig.dataPath.length - 5)}"`;
+    console.log(`Likely available at http://localhost:30000. Ctrl-C to stop.`);
+    command = process.execPath;
+    args = [nodeEntryPoint, dataPathArg];
+} else if (fs.existsSync(oldNodeEntryPoint)) {
+    console.log(`Starting FoundryVTT from ${oldNodeEntryPoint}...`);
+    command = process.execPath;
+    args = [oldNodeEntryPoint, dataPathArg];
 } else {
-    console.error(`Cannot start FoundryVTT. "${fvttPath}" is not a valid Foundry path.`);
+    console.error(
+        `Cannot start FoundryVTT. "${nodeEntryPoint}" and "${execPath}" and "${oldNodeEntryPoint}" do not exist.`,
+    );
     process.exit(1);
 }
 
-try {
-    const { stdout, stderr } = await execAsync(command);
-    console.log(`stdout: ${stdout}`);
-    if (stderr) console.error(`stderr: ${stderr}`);
-} catch (error) {
+const foundry = spawn(command, args, { stdio: "inherit" });
+
+foundry.on("error", (error) => {
     console.error(error);
-}
+    process.exitCode = 1;
+});
+
+foundry.on("exit", (code) => {
+    process.exitCode = code ?? 0;
+});
