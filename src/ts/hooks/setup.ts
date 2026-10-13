@@ -35,10 +35,13 @@ const Setup: Listener = {
             libWrapper.register(
                 MODULE_ID,
                 "foundry.canvas.placeables.Token.prototype._onDragLeftStart",
-                async function (this: Token, wrapped: (event: any) => any, event: Event) {
-                    const result = wrapped(event);
+                function (
+                    this: Token,
+                    wrapped: (event: PIXI.FederatedPointerEvent) => void,
+                    event: PIXI.FederatedPointerEvent,
+                ) {
                     log(`Token dragged, auto generated UUID: ${crypto.randomUUID()}`);
-                    return result;
+                    return wrapped(event);
                 },
                 "WRAPPER",
             );
@@ -48,13 +51,13 @@ const Setup: Listener = {
     },
 };
 
-async function onSoundStartWrapper(
+function onSoundStartWrapper(
     this: Playlist,
-    wrapped: (sound: PlaylistSound<null>) => void,
-    sound: PlaylistSound<null>,
+    wrapped: (sound: PlaylistSound<Playlist>) => Promise<void>,
+    sound: PlaylistSound<Playlist>,
 ): Promise<void> {
     log("Sound started");
-    wrapped(sound);
+    return wrapped(sound);
 }
 
 export { Setup };
