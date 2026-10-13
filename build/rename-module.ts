@@ -44,42 +44,32 @@ if (!newModuleName) {
 }
 
 const dirToSearch = path.resolve(process.cwd());
-const dirsToInclude = [
-    path.resolve(dirToSearch, ".github"),
-    path.resolve(dirToSearch, "packs"),
-    path.resolve(dirToSearch, "src"),
-    path.resolve(dirToSearch, "static"),
-    path.resolve(dirToSearch, "package.json"),
-    path.resolve(dirToSearch, "package-lock.json"),
-    path.resolve(dirToSearch, "README.md"),
-    path.resolve(dirToSearch, "vite.config.ts"),
-];
-const filesToInclude = [path.resolve(dirToSearch, ".gitignore")];
+const dirsToInclude = [".github", "src", "static"].map((dir) =>
+    path.resolve(dirToSearch, dir),
+);
+const filesToInclude = [
+    ".gitignore",
+    "package.json",
+    "package-lock.json",
+    "README.md",
+    "vite.config.ts",
+].map((file) => path.resolve(dirToSearch, file));
 const lockFilePath = path.resolve(
     dirToSearch,
     "static",
     "dfreds-module-template-ts.lock",
 );
 
-// Recursively find all files in included dirs
-const filesToReplaceStrings = fs
-    .readdirSync(dirToSearch, {
-        encoding: "utf-8",
-        recursive: true,
-    })
-    .map((file: string) => path.resolve(dirToSearch, file))
-    .filter((filePath: string) => {
-        const isIncluded = dirsToInclude.some((includeDir) =>
-            filePath.startsWith(includeDir),
-        );
+const filesInIncludedDirs = dirsToInclude
+    .filter((dir) => fs.existsSync(dir))
+    .flatMap((dir) =>
+        fs
+            .readdirSync(dir, { encoding: "utf-8", recursive: true })
+            .map((file: string) => path.resolve(dir, file)),
+    )
+    .filter((filePath: string) => !fs.lstatSync(filePath).isDirectory());
 
-        const isDirectory = fs.lstatSync(filePath).isDirectory();
-
-        return isIncluded && !isDirectory;
-    });
-
-// Add specific files not searched
-filesToReplaceStrings.push(...filesToInclude);
+const filesToReplaceStrings = [...filesInIncludedDirs, ...filesToInclude];
 
 console.log(
     `Changing identifier name, and description in the following files:\n${filesToReplaceStrings.join("\n")}`,
