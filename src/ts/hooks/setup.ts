@@ -1,4 +1,4 @@
-import type Application from "@client/appv1/api/application-v1.d.mts";
+import type { ApplicationV2 } from "@client/applications/api/_module.mjs";
 import { MODULE_ID } from "../constants.ts";
 import { log } from "../logger.ts";
 import { Listener } from "./index.ts";
@@ -16,20 +16,21 @@ const Setup: Listener = {
 
             libWrapper.register(
                 MODULE_ID,
-                "Application.prototype.bringToTop",
-                function (this: Application, wrapped: () => void) {
-                    log("Application brought to top");
+                "foundry.applications.api.ApplicationV2.prototype.bringToFront",
+                function (this: ApplicationV2, wrapped: () => void) {
+                    log("Application brought to front");
                     wrapped();
                 },
+                "WRAPPER",
             );
             libWrapper.register(
                 MODULE_ID,
-                "Application.prototype.minimize",
-                function (this: Application, wrapped: () => Promise<boolean>) {
-                    const r = wrapped();
-                    r.then(() => log("yay"));
-                    return r;
+                "foundry.applications.api.ApplicationV2.prototype.minimize",
+                async function (this: ApplicationV2, wrapped: () => Promise<void>) {
+                    await wrapped();
+                    log("Application minimized");
                 },
+                "WRAPPER",
             );
             libWrapper.register(
                 MODULE_ID,
