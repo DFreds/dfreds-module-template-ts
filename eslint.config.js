@@ -11,7 +11,7 @@ export default defineConfig(
     {
         ignores: [
             "dist/**/*",
-            "packs/**/*",
+            "src/packs/**/*",
             "static/lib/**/*",
             "*.mjs",
             "types/**/*",

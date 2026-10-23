@@ -1,17 +1,25 @@
 import fs from "fs";
 import path from "path";
 
-export const srcPacksRoot = path.join(process.cwd(), "src", "packs");
-export const staticPacksRoot = path.join(process.cwd(), "static", "packs");
-
-export function listImmediateSubdirs(dir: string): string[] {
-    if (!fs.existsSync(dir)) return [];
-    return fs
-        .readdirSync(dir, { withFileTypes: true })
-        .filter((e) => e.isDirectory())
-        .map((e) => path.join(dir, e.name));
+interface PackPaths {
+    name: string;
+    src: string;
+    dist: string;
 }
 
-export function directoryContainsJson(dir: string): boolean {
-    return fs.readdirSync(dir, { recursive: true, encoding: "utf8" }).some((f) => f.toLowerCase().endsWith(".json"));
+export function listPacks(): PackPaths[] {
+    const moduleJson = JSON.parse(fs.readFileSync("static/module.json", "utf8")) as {
+        packs: { name: string; path: string }[];
+    };
+    return moduleJson.packs.map((pack) => ({
+        name: pack.name,
+        src: path.resolve("src", pack.path),
+        dist: path.resolve("dist", pack.path),
+    }));
+}
+
+export function exitWithPackError(name: string, error: unknown): never {
+    console.error(`Failed on pack "${name}": ${error instanceof Error ? error.message : error}`);
+    console.error("If Foundry has this pack open, close the world (or Foundry) and try again.");
+    process.exit(1);
 }

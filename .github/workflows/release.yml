@@ -23,11 +23,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Compile packs
-        run: npm run compile-packs
-
       - name: Build production
         run: npm run build
+
+      - name: Compile packs
+        run: npm run pack
 
       - name: Extract tag version number
         id: get_version
